@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "VLM Law Translation",
+  "type": "object",
+  "required": ["law_id", "questions"],
+  "properties": {
+    "law_id": {
+      "type": "string",
+      "description": "Unique identifier for the law"
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "text", "allowed_responses"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[CA]\\d+$",
+            "description": "Question ID: C for CONDITION, A for ACTION, followed by a number"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["CONDITION", "ACTION"]
+          },
+          "text": {
+            "type": "string",
+            "minLength": 10,
+            "description": "Atomic visual question"
+          },
+          "allowed_responses": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["True", "False", "Uncertain"]
+            },
+            "minItems": 3,
+            "maxItems": 3
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

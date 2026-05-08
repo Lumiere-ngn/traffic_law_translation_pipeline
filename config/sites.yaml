@@ -1,0 +1,16 @@
+sites:
+  quebec:
+    base_url: "https://www.legisquebec.gouv.qc.ca"
+    index_path: "/en/document/cs/C-24.2?langCont=en"
+    adapter: "quebec"
+    rate_limit_ms: 1000
+    use_playwright: false
+    section_anchor_prefix: "se:"
+
+  ontario:
+    base_url: "https://www.ontario.ca"
+    index_path: "/laws/statute/90h08"
+    adapter: "ontario"
+    rate_limit_ms: 2000
+    use_playwright: true
+    bookmark_prefix: "BK"
