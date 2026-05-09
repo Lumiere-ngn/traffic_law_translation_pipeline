@@ -60,6 +60,18 @@ def main():
 
     if args.scrape_only:
         print("\nScrape-only mode requested. Saving raw laws and exiting.")
+        os.makedirs("output", exist_ok=True)
+        txt_path = os.path.join("output", "scraped_data.txt")
+        with open(txt_path, "w", encoding="utf-8") as f:
+            for law in laws:
+                f.write(f"ID: {law.id}\n")
+                if getattr(law, 'title', None):
+                    f.write(f"Title: {law.title}\n")
+                f.write(f"Section: {getattr(law, 'section', '')}\n")
+                f.write(f"URL: {getattr(law, 'source_url', '')}\n")
+                f.write(f"Body:\n{getattr(law, 'body', '')}\n")
+                f.write("-" * 80 + "\n\n")
+        print(f"Saved {len(laws)} laws to {txt_path}")
         sys.exit(0)
 
     # 2. Translate
