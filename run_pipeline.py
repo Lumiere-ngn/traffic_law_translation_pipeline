@@ -30,7 +30,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.scrapeonly and not args.model:
+    if not args.scrape_only and not args.model:
         parser.error("--model is required unless --scrape-only is used")
 
     print("=" * 60)
@@ -64,10 +64,22 @@ def main():
 
     # 2. Translate
     print(f"\nInitializing Open Interpreter with model: {args.model}")
-    # To be implemented: translator loop
-    print("Translation not fully implemented yet.")
+    from pipeline.translator import Translator
+    translator = Translator(model=args.model)
+    
+    print("\nStarting translation...")
+    for i, law in enumerate(laws):
+        print(f"[{i+1}/{len(laws)}] Translating {law.id} ...")
+        result = translator.translate_law(law)
+        if result["status"] == "ok":
+            print("  -> Success")
+        else:
+            print(f"  -> Failed: {result.get('error')}")
+            
+        # 3. Persist
+        # To be implemented: NDJSON writer
+        pass
 
-    # 3. Persist
     print("\nFinished pipeline run.")
 
 
