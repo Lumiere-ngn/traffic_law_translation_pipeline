@@ -30,7 +30,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not args.scrape-only and not args.model:
+    if not args.scrapeonly and not args.model:
         parser.error("--model is required unless --scrape-only is used")
 
     print("=" * 60)
